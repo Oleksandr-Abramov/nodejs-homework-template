@@ -18,6 +18,11 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
+    const id = req.params;
+    const { error } = schemas.idSchema.validate(id);
+    if (error) {
+      throw RequestError(400, error.message);
+    }
     await ctrl.getById(req, res);
   } catch (error) {
     next(error);
@@ -40,6 +45,11 @@ router.post("/", async (req, res, next) => {
 
 router.delete("/:id", async (req, res, next) => {
   try {
+    const id = req.params;
+    const { error } = schemas.idSchema.validate(id);
+    if (error) {
+      throw RequestError(400, error.message);
+    }
     await ctrl.removeById(req, res);
   } catch (error) {
     next(error);
@@ -52,9 +62,16 @@ router.put("/:id", async (req, res, next) => {
     if (Object.keys(contact).length === 0) {
       throw RequestError(400, "missing fields");
     }
+
     const { error } = schemas.addSchema.validate(contact);
     if (error) {
       throw RequestError(400, error.message);
+    }
+
+    const id = req.params;
+    const err = schemas.idSchema.validate(id);
+    if (err.error) {
+      throw RequestError(400, err.error.message);
     }
 
     await ctrl.updateById(req, res);
@@ -66,6 +83,8 @@ router.put("/:id", async (req, res, next) => {
 router.patch("/:id/favorite", async (req, res, next) => {
   try {
     const contact = req.body;
+    const { id } = req.params;
+    contact.id = id;
     if (Object.keys(contact).length === 0) {
       throw RequestError(400, "missing fields");
     }

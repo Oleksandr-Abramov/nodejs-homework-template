@@ -1,14 +1,14 @@
 const express = require("express");
+const authentificate = require("../../middlewares/authentificate");
 
-// const contacts = require("../../models/contacts");
-const ctrl = require("../../controllers");
+const ctrl = require("../../controllers/contacts");
 
 const { RequestError } = require("../../helpers");
 
 const router = express.Router();
 const { schemas } = require("../../models/contact");
 
-router.get("/", async (req, res, next) => {
+router.get("/", authentificate, async (req, res, next) => {
   try {
     await ctrl.getAll(req, res);
   } catch (error) {
@@ -16,7 +16,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", authentificate, async (req, res, next) => {
   try {
     const id = req.params;
     const { error } = schemas.idSchema.validate(id);
@@ -29,7 +29,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", authentificate, async (req, res, next) => {
   try {
     const contact = req.body;
     const { error } = schemas.addSchema.validate(contact);
@@ -43,7 +43,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", authentificate, async (req, res, next) => {
   try {
     const id = req.params;
     const { error } = schemas.idSchema.validate(id);
@@ -56,7 +56,7 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", authentificate, async (req, res, next) => {
   try {
     const contact = req.body;
     if (Object.keys(contact).length === 0) {
@@ -80,7 +80,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.patch("/:id/favorite", async (req, res, next) => {
+router.patch("/:id/favorite", authentificate, async (req, res, next) => {
   try {
     const contact = req.body;
     const { id } = req.params;

@@ -1,7 +1,7 @@
-const { Contact } = require("../models/contact");
-const { RequestError } = require("../helpers");
+const { Contact } = require("../../models/contact");
+const { RequestError } = require("../../helpers");
 
-const updateFavorites = async (req, res) => {
+const updateById = async (req, res) => {
   const { id } = req.params;
   const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
   if (!result) {
@@ -9,4 +9,4 @@ const updateFavorites = async (req, res) => {
   }
   res.json(result);
 };
-module.exports = updateFavorites;
+module.exports = updateById;

@@ -1,11 +1,11 @@
 const RequestError = require("./RequestError");
 const handleSaveErrors = require("./handleSaveErrors");
 const ctrlWrapper = require("./ctrlWrapper");
-// const idMaker = require("./idMarker");
+const sendEmail = require("./sendEmail");
 
 module.exports = {
   RequestError,
   handleSaveErrors,
   ctrlWrapper,
-  // idMaker,
+  sendEmail,
 };

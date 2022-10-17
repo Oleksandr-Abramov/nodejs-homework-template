@@ -8,6 +8,8 @@ const authentificate = require("../../middlewares/authentificate");
 const upload = require("../../middlewares/upload");
 
 router.post("/register", validateBody(schemas.registerSchema), ctrlWrapper(ctrl.register));
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
+router.post("/verify", validateBody(schemas.emailSchema), ctrlWrapper(ctrl.resendEmail));
 router.get("/login", validateBody(schemas.loginSchema), ctrlWrapper(ctrl.login));
 router.get("/current", authentificate, ctrlWrapper(ctrl.getCurrent));
 router.get("/logout", authentificate, ctrlWrapper(ctrl.logout));

@@ -3,6 +3,7 @@ const { RequestError, sendEmail } = require("../../helpers");
 const bcrypt = require("bcryptjs");
 const gravatar = require("gravatar");
 const { nanoid } = require("nanoid");
+const { BASE_URL } = process.env;
 
 const register = async (req, res) => {
   const { password, email, subscription } = req.body;
@@ -19,7 +20,7 @@ const register = async (req, res) => {
   const mail = {
     to: email,
     subject: "Підтвердження реєстрації на сайті",
-    html: `<a href:"http://localhost:3000/api/users/verify/${verificationToken}">Для підтвердження пошти перейдіть за посиланням</a>`,
+    html: `<a href:"${BASE_URL}/api/users/verify/${verificationToken}">Для підтвердження пошти перейдіть за посиланням</a>`,
   };
 
   await sendEmail(mail);
